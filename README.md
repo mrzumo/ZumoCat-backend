@@ -30,7 +30,7 @@ Get a random cat from the database
 ## Post Routes
 
 ### /upload
-Upload an image to the server, example under /example/upload.js
+Upload an image to the server, example under /example/upload.js   
 Tags should be in json
 
 ```json
