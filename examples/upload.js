@@ -3,8 +3,7 @@ const path = require("path");
 const axios = require("axios");
 const FormData = require("form-data");
 
-
-const image = fs.readFileSync(path.join(__dirname, "../images/IMG_1596.jpeg"));
+const image = fs.readFileSync(path.join(__dirname, "./cat_example.jpeg"));
 
 const form = new FormData();
 form.append("image", image, "image.jpeg"); 
