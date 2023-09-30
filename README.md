@@ -14,7 +14,7 @@
 ### /random
 Get a random cat from the database
 
-```lua
+```json
 {
     "title": "string",
     "description": "string",
@@ -32,7 +32,7 @@ Get a random cat from the database
 ### /upload
 Upload an image to the server, example under /example/upload.js
 
-```lua
+```json
 {
     headers: {
         "title": "string",
