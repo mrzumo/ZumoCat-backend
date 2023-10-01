@@ -18,7 +18,7 @@ const { initializeApp } = require("firebase/app");
 
 // -- Constants --
 const dotenv = require("dotenv");
-const environment = process.env.NODE_ENV || "development";
+const environment = process.env.NODE_ENV;
 
 console.log(`[Server] Running in ${environment} mode`);
 
