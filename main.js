@@ -110,6 +110,10 @@ function uploadImage(fileData, fileExtention, catData) {
 		});
 }
 
+app.get("/" , (_req, res) => {
+	res.status(200).send("Server Running")
+})
+
 app.route("/upload").post(function (req, res, _next) {
 	req.pipe(req.busboy);
 	req.busboy.on("file", function (_fileName, fileStream, fileMetadata) {
