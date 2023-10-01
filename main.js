@@ -4,16 +4,23 @@ require("dotenv").config();
 
 const express = require("express");
 const busboy = require("connect-busboy");
+const request = require("sync-request");
 
 const fs = require("fs");
 const path = require("path");
 
 const Mongoose = require("mongoose");
-const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
+const {
+	getStorage,
+	ref,
+	uploadBytes,
+	getDownloadURL,
+} = require("firebase/storage");
 const { initializeApp } = require("firebase/app");
 
 // -- Constants --
-const port = 80;
+const port = parseInt(process.env.PORT) || 4040;
+const is_production = (process.env.PRODUCTION == "true");
 
 const app = express();
 app.use(busboy());
@@ -38,8 +45,8 @@ Mongoose.connect(MONGO_URI, {
 const catSchema = new Mongoose.Schema(
 	{
 		title: String,
-        description: String,
-        tags: [String],
+		description: String,
+		tags: [String],
 
 		filePath: String,
 		uploadTime: Number,
@@ -110,9 +117,9 @@ function uploadImage(fileData, fileExtention, catData) {
 		});
 }
 
-app.get("/" , (_req, res) => {
-	res.status(200).send("Server Running")
-})
+app.get("/", (_req, res) => {
+	res.status(200).send("Server Running");
+});
 
 app.route("/upload").post(function (req, res, _next) {
 	req.pipe(req.busboy);
@@ -149,20 +156,23 @@ app.route("/upload").post(function (req, res, _next) {
 });
 
 app.get("/random", async (_req, res) => {
-    let cats = await Cat.find({});
-    let randomCat = cats[Math.floor(Math.random() * cats.length)];
+	let cats = await Cat.find({});
+	let randomCat = cats[Math.floor(Math.random() * cats.length)];
 
-    let refrence = ref(storage, randomCat.filePath);
-    let url = await getDownloadURL(refrence);
+	let refrence = ref(storage, randomCat.filePath);
+	let url = await getDownloadURL(refrence);
 
-    res.status(200).send({
-        title: randomCat.title,
-        description: randomCat.description,
-        tags: randomCat.tags,
-        url: url
-    });
-})
+	res.status(200).send({
+		title: randomCat.title,
+		description: randomCat.description,
+		tags: randomCat.tags,
+		url: url,
+	});
+});
 
 app.listen(port, () => {
-	console.log(`[Server] - running on port ${port}`);
+	let publicIp = request("GET", "https://api.ipify.org").getBody();
+	let ipAddress = production ? `${publicIp}:${port}` : "localhost:80";
+
+	console.log(`[Server] running on ${ipAddress}`);
 });
