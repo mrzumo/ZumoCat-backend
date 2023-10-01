@@ -1,4 +1,3 @@
-require("dotenv").config();
 
 // -- Imports
 
@@ -6,6 +5,7 @@ const express = require("express");
 const busboy = require("connect-busboy");
 const request = require("sync-request");
 const path = require("path");
+const cors = require("cors");
 
 const Mongoose = require("mongoose");
 const {
@@ -17,11 +17,23 @@ const {
 const { initializeApp } = require("firebase/app");
 
 // -- Constants --
+const dotenv = require("dotenv");
+const environment = process.env.NODE_ENV || "development";
+
+console.log(`[Server] Running in ${environment} mode`);
+
+if (environment == "development") {
+	dotenv.config({ path: ".env.dev" })
+} else {
+	dotenv.config({ path: ".env.prod" })
+}
+
 const port = parseInt(process.env.PORT) || 4040;
 const is_production = (process.env.PRODUCTION == "true");
 
 const app = express();
 app.use(busboy());
+app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 const MONGO_URI = process.env.MONGO_URI;
@@ -35,10 +47,7 @@ function assertWarn(condition, message, callback) {
 
 // -- Mongoose --
 
-Mongoose.connect(MONGO_URI, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
+
 
 const catSchema = new Mongoose.Schema(
 	{
@@ -59,6 +68,7 @@ const Cat = Mongoose.model("Cat", catSchema);
 initializeApp({
 	storageBucket: "zumocat-78816.appspot.com",
 });
+console.log("[Server] Connected to firebase");
 
 const storage = getStorage();
 
@@ -107,8 +117,9 @@ function uploadImage(fileData, fileExtention, catData) {
 	uploadBytes(storageRef, fileData)
 		.then((_snapshot) => {
 			console.log("[+] Uploaded image to firebase");
-			cat.save(); // only save to db if upload was successful
-			console.log("[+] Saved image data to database");
+			cat.save().then(() => {
+				console.log("[+] Saved image data to database\n");
+			}); // only save to db if upload was successful
 		})
 		.catch((error) => {
 			console.warn("[!] Error uploading image:", error);
@@ -168,9 +179,22 @@ app.get("/random", async (_req, res) => {
 	});
 });
 
-app.listen(port, () => {
-	let publicIp = request("GET", "https://api.ipify.org").getBody();
-	let ipAddress = is_production ? `${publicIp}:${port}` : `localhost:${port}`;
 
-	console.log(`[Server] running on ${ipAddress}`);
-});
+
+async function main() {
+	await Mongoose.connect(MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+
+	console.log("[Server] Connected to mongodb");
+
+	app.listen(port, () => {
+		let publicIp = request("GET", "https://api.ipify.org").getBody();
+		let ipAddress = is_production ? `${publicIp}:${port}` : `localhost:${port}`;
+	
+		console.log(`[Server] running on ${ipAddress}\n`);
+	});
+}
+
+main();
