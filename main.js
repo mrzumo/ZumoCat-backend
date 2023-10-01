@@ -35,10 +35,7 @@ function assertWarn(condition, message, callback) {
 
 // -- Mongoose --
 
-Mongoose.connect(MONGO_URI, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
+Mongoose.connect(MONGO_URI);
 
 const catSchema = new Mongoose.Schema(
 	{
@@ -170,7 +167,7 @@ app.get("/random", async (_req, res) => {
 
 app.listen(port, () => {
 	let publicIp = request("GET", "https://api.ipify.org").getBody();
-	let ipAddress = is_production ? `${publicIp}:${port}` : "localhost:80";
+	let ipAddress = is_production ? `${publicIp}:${port}` : `localhost:${port}`;
 
 	console.log(`[Server] running on ${ipAddress}`);
 });
