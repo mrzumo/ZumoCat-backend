@@ -13,6 +13,8 @@ const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/stora
 const { initializeApp } = require("firebase/app");
 
 // -- Constants --
+const port = 80;
+
 const app = express();
 app.use(busboy());
 app.use(express.static(path.join(__dirname, "public")));
@@ -157,6 +159,6 @@ app.get("/random", async (_req, res) => {
     });
 })
 
-app.listen(80, () => {
-	console.log("[Server] - running on port 80");
+app.listen(port, () => {
+	console.log(`[Server] - running on port ${port}`);
 });
