@@ -35,7 +35,10 @@ function assertWarn(condition, message, callback) {
 
 // -- Mongoose --
 
-Mongoose.connect(MONGO_URI);
+Mongoose.connect(MONGO_URI, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 
 const catSchema = new Mongoose.Schema(
 	{
