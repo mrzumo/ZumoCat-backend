@@ -5,8 +5,6 @@ require("dotenv").config();
 const express = require("express");
 const busboy = require("connect-busboy");
 const request = require("sync-request");
-
-const fs = require("fs");
 const path = require("path");
 
 const Mongoose = require("mongoose");
@@ -172,7 +170,7 @@ app.get("/random", async (_req, res) => {
 
 app.listen(port, () => {
 	let publicIp = request("GET", "https://api.ipify.org").getBody();
-	let ipAddress = production ? `${publicIp}:${port}` : "localhost:80";
+	let ipAddress = is_production ? `${publicIp}:${port}` : "localhost:80";
 
 	console.log(`[Server] running on ${ipAddress}`);
 });
