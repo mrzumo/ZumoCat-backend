@@ -1,7 +1,6 @@
 // -- Pre Init
 
-require("./src/environment.js")
-
+require("./src/environment.js");
 
 // -- Imports
 
@@ -14,7 +13,7 @@ const cors = require("cors");
 
 // -- Constants --
 const SERVER_PORT = parseInt(process.env.PORT) || 4040;
-const IS_PRODUCTION = (process.env.PRODUCTION == "true");
+const IS_PRODUCTION = process.env.PRODUCTION == "true";
 
 // -- Main --
 
@@ -23,16 +22,16 @@ app.use(busboy()); // Parse multipart/form-data
 app.use(cors()); // Allow cross origin requests
 
 // -- Routes --
-
+const { requireAuth } = require("./src/routes/auth.js");
 const routes = {
 	root: require("./src/routes/root.js"),
 	upload: require("./src/routes/upload.js"),
 	random: require("./src/routes/random.js"),
-}
+};
 
 app.get("/", routes.root);
 app.get("/random", routes.random);
-app.post("/upload", routes.upload);
+app.post("/upload", requireAuth, routes.upload);
 
 // -- Init --
 
@@ -41,8 +40,10 @@ async function main() {
 
 	app.listen(SERVER_PORT, () => {
 		let publicIp = request("GET", "https://api.ipify.org").getBody();
-		let ipAddress = IS_PRODUCTION ? `${publicIp}:${SERVER_PORT}` : `localhost:${SERVER_PORT}`; // show public ip if in production
-	
+		let ipAddress = IS_PRODUCTION
+			? `${publicIp}:${SERVER_PORT}`
+			: `localhost:${SERVER_PORT}`; // show public ip if in production
+
 		console.log(`[Server] Running on ${ipAddress}\n`);
 	});
 }

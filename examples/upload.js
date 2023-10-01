@@ -11,9 +11,11 @@ form.append("image", image, "image.jpeg");
 axios
 	.post("http://localhost:80/upload", form, {
         headers: {
-            "title": "Test Image",
-            "description": "This is a test image",
-            "tags": JSON.stringify(["tag1", "tag2"]),
+            title: "Test Image",
+            description: "This is a test image",
+            tags: JSON.stringify(["tag1", "tag2"]),
+
+			Authorization: "123",
         },  
 
 		...form.getHeaders(),

@@ -16,13 +16,13 @@ const CatSchema = new Mongoose.Schema(
 const CatModel = Mongoose.model("Cat", CatSchema);
 
 module.exports = {
-    CatModel: CatModel,
-    InitMongo: async function () {
-        await Mongoose.connect(MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-    
-        console.log("[Server] Connected to mongodb");
-    },
+	CatModel: CatModel,
+	InitMongo: async function () {
+		await Mongoose.connect(MONGO_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+
+		console.log("[Server] Connected to mongodb");
+	},
 };

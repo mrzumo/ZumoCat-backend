@@ -66,5 +66,5 @@ function uploadImage(fileData, fileExtention, catData) {
 
 module.exports = {
 	uploadImage: uploadImage,
-    storage: storage,
+	storage: storage,
 };
