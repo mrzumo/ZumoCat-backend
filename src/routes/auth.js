@@ -1,4 +1,4 @@
-function requireAuth(req, res, next) {
+export function requireAuth(req, res, next) {
 	if (req.headers.authorization !== process.env.AUTH_TOKEN) {
 		return res.status(401).send("Unauthorized");
 	}
@@ -6,6 +6,7 @@ function requireAuth(req, res, next) {
 	next();
 }
 
-module.exports = {
-	requireAuth: requireAuth,
-};
+// module.exports = {
+// 	requireAuth: requireAuth,
+// };
+

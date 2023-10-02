@@ -1,8 +1,8 @@
-const { CatModel } = require("../mongoose");
-const { storage } = require("../firebase");
-const { ref, getDownloadURL } = require("firebase/storage");
+import { CatModel } from "../mongoose.js";
+import { storage } from "../firebase.js";
+import { ref, getDownloadURL } from "firebase/storage";
 
-module.exports = async function (_req, res) {
+export default async function (_req, res) {
 	let cats = await CatModel.find({});
 	let randomCat = cats[Math.floor(Math.random() * cats.length)];
 

@@ -1,6 +1,6 @@
-const { uploadImage } = require("../firebase.js");
+import { uploadImage } from "../firebase.js";
 
-module.exports = function (req, res, _next) {
+export default function (req, res, _next) {
 	// Pipe the request to busboy
 	req.pipe(req.busboy);
 

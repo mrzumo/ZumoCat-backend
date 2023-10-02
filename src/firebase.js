@@ -1,16 +1,17 @@
-const { getStorage, ref, uploadBytes } = require("firebase/storage");
-const { initializeApp } = require("firebase/app");
-const { assertWarn } = require("./utility.js");
-const { CatModel } = require("./mongoose.js");
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { assertWarn } from "./utility.js";
+import { CatModel } from "./mongoose.js";
+import Logger from "./logger.js";
 
 initializeApp({
 	storageBucket: "zumocat-78816.appspot.com",
 });
-console.log("[Server] Connected to firebase");
+Logger.info("[Server] Connected to firebase");
 
-const storage = getStorage();
+export const storage = getStorage();
 
-function uploadImage(fileData, fileExtention, catData) {
+export function uploadImage(fileData, fileExtention, catData) {
 	/*
         CatData: {
             title: String,
@@ -37,7 +38,7 @@ function uploadImage(fileData, fileExtention, catData) {
 	let uploadTime = Date.now();
 	let filePath = `${uploadTime}.${fileExtention}`;
 
-	console.log(
+	Logger.info(
 		`Uploading image: ${filePath} with ${JSON.stringify(catData, null, 4)}`
 	);
 
@@ -54,17 +55,17 @@ function uploadImage(fileData, fileExtention, catData) {
 
 	uploadBytes(storageRef, fileData)
 		.then((_snapshot) => {
-			console.log("[+] Uploaded image to firebase");
+			Logger.info("[+] Uploaded image to firebase");
 			cat.save().then(() => {
-				console.log("[+] Saved image data to database\n");
+				Logger.info("[+] Saved image data to database\n");
 			}); // only save to db if upload was successful
 		})
 		.catch((error) => {
-			console.warn("[!] Error uploading image:", error);
+			Logger.error("[!] Error uploading image:", error);
 		});
 }
 
-module.exports = {
-	uploadImage: uploadImage,
-	storage: storage,
-};
+// module.exports = {
+// 	uploadImage: uploadImage,
+// 	storage: storage,
+// };

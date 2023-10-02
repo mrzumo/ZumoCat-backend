@@ -1,15 +1,16 @@
 // -- Pre Init
 
-require("./src/environment.js");
+import "./src/environment.js";
 
 // -- Imports
 
-const { InitMongo } = require("./src/mongoose.js");
+import Logger from "./src/logger.js";
+import { InitMongo } from "./src/mongoose.js";
 
-const express = require("express");
-const request = require("sync-request");
-const busboy = require("connect-busboy");
-const cors = require("cors");
+import express from "express";
+import request from "sync-request";
+import busboy from "connect-busboy";
+import cors from "cors";
 
 // -- Constants --
 const SERVER_PORT = parseInt(process.env.PORT) || 4040;
@@ -22,12 +23,12 @@ app.use(busboy()); // Parse multipart/form-data
 app.use(cors()); // Allow cross origin requests
 
 // -- Routes --
-const { requireAuth } = require("./src/routes/auth.js");
+import { requireAuth } from "./src/routes/auth.js";
 const routes = {
-	root: require("./src/routes/root.js"),
-	upload: require("./src/routes/upload.js"),
-	random: require("./src/routes/random.js"),
-};
+	root: (await import("./src/routes/root.js")).default,
+	upload: (await import("./src/routes/upload.js")).default,
+	random: (await import("./src/routes/random.js")).default,
+  };
 
 app.get("/", routes.root);
 app.get("/random", routes.random);
@@ -44,9 +45,8 @@ async function main() {
 			? `${publicIp}:${SERVER_PORT}`
 			: `localhost:${SERVER_PORT}`; // show public ip if in production
 
-		console.log(`[Server] Running on ${ipAddress}\n`);
+		Logger.info(`[Server] Running on ${ipAddress}\n`);
 	});
 }
 
 main();
-fo

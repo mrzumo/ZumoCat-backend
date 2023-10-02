@@ -1,12 +1,8 @@
-const logger = require("./logger");
+import logger from "./logger.js";
 
-function assertWarn(condition, message, callback) {
+export function assertWarn(condition, message, callback) {
 	if (!condition) {
 		logger.warn(message);
 		if (callback) callback();
 	}
 }
-
-module.exports = {
-	assertWarn: assertWarn,
-};
