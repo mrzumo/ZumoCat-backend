@@ -64,8 +64,3 @@ export function uploadImage(fileData, fileExtention, catData) {
 			Logger.error("[!] Error uploading image:", error);
 		});
 }
-
-// module.exports = {
-// 	uploadImage: uploadImage,
-// 	storage: storage,
-// };

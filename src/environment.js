@@ -1,7 +1,6 @@
 import Logger from "./logger.js";
 import dotenv from "dotenv";
 
-
 const environment = process.env.NODE_ENV;
 
 Logger.info(`[Server] Running in ${environment} mode`);

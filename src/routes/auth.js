@@ -6,7 +6,3 @@ export function requireAuth(req, res, next) {
 	next();
 }
 
-// module.exports = {
-// 	requireAuth: requireAuth,
-// };
-

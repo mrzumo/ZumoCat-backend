@@ -14,6 +14,7 @@ const CatSchema = new Mongoose.Schema(
 	{ collection: "Cats" }
 );
 export const CatModel = Mongoose.model("Cat", CatSchema);
+
 export async function InitMongo() {
 	await Mongoose.connect(MONGO_URI, {
 		useNewUrlParser: true,

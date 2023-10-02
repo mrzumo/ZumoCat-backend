@@ -51,11 +51,4 @@ const logger = createLogger({
 	],
 });
 
-// logger.add(
-// 	new transports.Console({
-// 		format: format.simple(),
-// 	})
-// );
-
-// module.exports = logger;
 export default logger;
