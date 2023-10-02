@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development node main.js",
-    "prod": "cross-env NODE_ENV=production node main.js"
+    "prod": "cross-env NODE_ENV=production node main.js",
+    "pm2": "pm2 start npm --name \"main.js\" -- run prod"
   },
   "author": "rofl",
   "license": "MIT",
