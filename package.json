@@ -19,6 +19,7 @@
     "firebase": "^10.4.0",
     "form-data": "^4.0.0",
     "mongoose": "^5.13.20",
-    "sync-request": "^6.1.0"
+    "sync-request": "^6.1.0",
+    "winston": "^3.10.0"
   }
 }

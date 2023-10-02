@@ -1,6 +1,8 @@
+const logger = require("./logger");
+
 function assertWarn(condition, message, callback) {
 	if (!condition) {
-		console.warn(message);
+		logger.warn(message);
 		if (callback) callback();
 	}
 }
