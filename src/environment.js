@@ -1,9 +1,8 @@
 import Logger from "./logger.js";
 import dotenv from "dotenv";
 
-const environment = process.env.NODE_ENV;
+export const environment = process.env.NODE_ENV;
 
-Logger.info(`[Server] Running in ${environment} mode`);
 
 if (environment == "development") {
 	dotenv.config({ path: ".env.dev" });
@@ -13,3 +12,4 @@ if (environment == "development") {
 	Logger.error(`[Server] Invalid environment: ${environment}`);
 	process.exit(1);
 }
+

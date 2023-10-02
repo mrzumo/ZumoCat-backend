@@ -16,10 +16,16 @@ const CatSchema = new Mongoose.Schema(
 export const CatModel = Mongoose.model("Cat", CatSchema);
 
 export async function InitMongo() {
-	await Mongoose.connect(MONGO_URI, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	});
+	try {
+		await Mongoose.connect(MONGO_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
+	}
+	catch (error) {
+		Logger.error(`[Server] Failed to connect to mongodb: ${error}`);
+		process.exit(1);
+	}
 
 	Logger.info("[Server] Connected to mongodb");
 }

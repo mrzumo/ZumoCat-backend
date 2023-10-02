@@ -1,6 +1,9 @@
-import fs from "fs";
 import { ChalkColors } from "./constants.js";
 import { createLogger, transports, format } from "winston";
+
+import fs from "fs";
+import chalk from "chalk";
+
 
 // Delete previous logs
 if (!fs.existsSync("logs")) {
@@ -19,6 +22,19 @@ if (!fs.existsSync("logs")) {
 	}
 }
 
+const colorReplace = {
+	"[Server]": ChalkColors.blue("[Server]"),
+	"[+]": ChalkColors.green("[+]"),
+	"[!]": ChalkColors.red("[!]"),
+
+	"Environment Variables:": chalk.bold("Environment Variables:"),
+	"Port:": chalk.bold("Port:"),
+	"Production:": chalk.bold("Production:"),
+	"Rate Limit:": chalk.bold("Rate Limit:"),
+	"Max:": chalk.bold("Max:"),
+	"Delay:": chalk.bold("Delay:"),
+}
+
 const fileFormat = format.combine(
 	format.timestamp({
 		format: "YYYY-MM-DD HH:mm:ss",
@@ -32,7 +48,16 @@ const consoleFormat = format.combine(
 		format: "YYYY-MM-DD HH:mm:ss",
 	}),
 	format.printf((info) => {
-		info.message = info.message.replace("[Server]",	ChalkColors.blue("[Server]"));
+		for (const [key, value] of Object.entries(colorReplace)) {
+			info.message = info.message.replace(key, value);
+		}
+
+		for (const word of info.message.split(" ")) { // replace all numbers and booleans with purple
+			if (!isNaN(word) || word == "true" || word == "false") {
+				info.message = info.message.replace(word, ChalkColors.purple(word));
+			}
+		}
+
 		return `${ChalkColors.dim(info.timestamp)} ${info.level}: ${info.message}`;
 	})
 );
