@@ -40,9 +40,8 @@ const app = express();
 app.use(busboy()) // Parse multipart/form-data
 app.use(cors()) // Allow cross origin requests
 
-app.use(bodyParser.json({ limit: "50mb" }))
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
-
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 // -- Routes --
 
 const rateLimiter = rateLimit({
