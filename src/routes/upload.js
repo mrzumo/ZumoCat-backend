@@ -16,15 +16,14 @@ export default function (req, res, _next) {
 
 		// When the file stream ends, parse the tags and upload the image
 		fileStream.on("end", function () {
-			let tags;
+			
+			let tags = [];
 			if (req.headers.tags) {
 				try {
 					tags = JSON.parse(req.headers.tags);
 				} catch (e) {
 					return res.status(400).send("Invalid tag header");
 				}
-			} else {
-				tags = [];
 			}
 
 			const catData = {

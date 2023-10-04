@@ -12,7 +12,6 @@ import express from "express";
 import request from "sync-request";
 import busboy from "connect-busboy";
 import rateLimit from "express-rate-limit";
-import bodyParser from "body-parser";
 
 // -- Constants --
 
@@ -40,8 +39,9 @@ const app = express();
 app.use(busboy()) // Parse multipart/form-data
 app.use(cors()) // Allow cross origin requests
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.json({limit: '8mb'}));
+app.use(express.urlencoded({limit: '8mb'}));
+
 // -- Routes --
 
 const rateLimiter = rateLimit({

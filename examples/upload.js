@@ -8,10 +8,10 @@ const form = new FormData();
 form.append("image", image, "image.jpeg"); 
 
 axios
-	.post("https://api.zumo.cat/upload", form, {
+	.post("https://api.com/upload", form, {
         headers: {
             title: "Test Image",
-            description: "This is a test image 2",
+            description: "This is a test image",
             tags: JSON.stringify(["tag1", "tag2"]),
 
 			Authorization: "-",
