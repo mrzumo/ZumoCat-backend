@@ -9,16 +9,12 @@ import chalk from "chalk";
 if (!fs.existsSync("logs")) {
 	fs.mkdirSync("logs");
 } else {
-	let logs_exist =
-		fs.existsSync("logs/error.log") &&
-		fs.existsSync("logs/warn.log") &&
-		fs.existsSync("logs/info.log") &&
-		fs.existsSync("logs/combined.log");
+	let logs_exist = fs.existsSync("logs")
+
 	if (logs_exist) {
-		fs.unlinkSync("logs/error.log");
-		fs.unlinkSync("logs/warn.log");
-		fs.unlinkSync("logs/info.log");
-		fs.unlinkSync("logs/combined.log");
+		fs.readdirSync("logs").map((child) => {
+			fs.unlinkSync(`logs/${child}`)
+		});
 	}
 }
 

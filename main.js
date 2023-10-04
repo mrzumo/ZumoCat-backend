@@ -31,16 +31,6 @@ Logger.info(`	Rate Limit:`)
 Logger.info(`		Max: ${RATE_LIMIT_MAX}`)
 Logger.info(`		Delay: ${RATE_LIMIT_DELAY}\n`)
 
-// Logger.info(`
-// Environment Variables {
-// 	Port: ${SERVER_PORT},
-// 	Production: ${IS_PRODUCTION},
-// 	Rate Limit: {
-// 		Max: ${RATE_LIMIT_MAX},
-// 		Delay: ${RATE_LIMIT_DELAY}
-// 	}
-// }`);
-
 Logger.info(`[Server] Running in ${environment} mode`);
 
 // -- Main --
