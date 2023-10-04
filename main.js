@@ -12,6 +12,7 @@ import express from "express";
 import request from "sync-request";
 import busboy from "connect-busboy";
 import rateLimit from "express-rate-limit";
+import bodyParser from "body-parser";
 
 // -- Constants --
 
@@ -22,7 +23,6 @@ const IS_PRODUCTION = env.PRODUCTION == "true" || false;
 
 const RATE_LIMIT_MAX = parseInt(env.RATE_LIMIT_MAX) || 100;
 const RATE_LIMIT_DELAY = parseInt(env.RATE_LIMIT_DELAY) || 60 * 5000;
-
 
 Logger.info("Environment Variables: ")
 Logger.info(`	Port: ${SERVER_PORT}`)
@@ -36,8 +36,12 @@ Logger.info(`[Server] Running in ${environment} mode`);
 // -- Main --
 
 const app = express();
-app.use(busboy()); // Parse multipart/form-data
-app.use(cors()); // Allow cross origin requests
+
+app.use(busboy()) // Parse multipart/form-data
+app.use(cors()) // Allow cross origin requests
+
+app.use(bodyParser.json({ limit: "50mb" }))
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
 
 // -- Routes --
 
