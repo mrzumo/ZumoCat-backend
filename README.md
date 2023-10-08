@@ -4,8 +4,7 @@
 
 ## Todo:
     - Add get request for images by tags
-    - Return a list of recently uploaded images
-    
+    - Add an option for amount of images from /latest    
 <br>
 
 ## GET Routes
