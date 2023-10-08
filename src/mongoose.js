@@ -1,5 +1,7 @@
 import Mongoose from "mongoose";
 import Logger from "./logger.js";
+import { storage } from "./firebase.js";
+import { ref, getDownloadURL } from "firebase/storage";
 
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -21,11 +23,22 @@ export async function InitMongo() {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		});
-	}
-	catch (error) {
+	} catch (error) {
 		Logger.error(`[Server] Failed to connect to mongodb: ${error}`);
 		process.exit(1);
 	}
 
 	Logger.info("[Server] Connected to mongodb");
+}
+
+export async function getModelJson(model) {
+	let refrence = ref(storage, model.filePath);
+	let url = await getDownloadURL(refrence);
+
+	return {
+		title: model.title,
+		description: model.description,
+		tags: model.tags,
+		url: url,
+	};
 }

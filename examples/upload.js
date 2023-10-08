@@ -13,7 +13,6 @@ axios
             title: "Test Image",
             description: "This is a test image",
             tags: JSON.stringify(["tag1", "tag2"]),
-
 			Authorization: "-",
         },  
 

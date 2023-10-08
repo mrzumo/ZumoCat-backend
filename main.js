@@ -40,7 +40,7 @@ app.use(busboy()) // Parse multipart/form-data
 app.use(cors()) // Allow cross origin requests
 
 app.use(express.json({limit: '8mb'}));
-app.use(express.urlencoded({limit: '8mb'}));
+app.use(express.urlencoded({limit: '8mb', extended: true }));
 
 // -- Routes --
 
@@ -60,10 +60,12 @@ const routes = {
 	root: (await import("./src/routes/root.js")).default,
 	upload: (await import("./src/routes/upload.js")).default,
 	random: (await import("./src/routes/random.js")).default,
+	getLatest: (await import("./src/routes/getLatest.js")).default,
 };
 
 app.get("/", routes.root);
 app.get("/random", rateLimiter, routes.random);
+app.get("/latest", rateLimiter, routes.getLatest);
 app.post("/upload", requireAuth, routes.upload);
 
 // -- Init --
@@ -72,10 +74,10 @@ async function main() {
 	await InitMongo(); // Connect to mongodb
 
 	app.listen(SERVER_PORT, () => {
-		let publicIp = request("GET", "https://api.ipify.org").getBody();
+		let publicIp = request("GET", "https://api.ipify.org").getBody()
 		let ipAddress = IS_PRODUCTION
 			? `${publicIp}:${SERVER_PORT}`
-			: `localhost:${SERVER_PORT}`; // show public ip if in production
+			: `localhost:${SERVER_PORT}`;
 
 		Logger.info(`[Server] Running on ${ipAddress}\n`);
 	});
