@@ -23,6 +23,22 @@ Get a random cat from the database
 }
 ```
 
+### /latest
+Return the latest 30 uploaded images
+
+```json
+{
+    {
+        "title": "string",
+        "description": "string",
+        "tags": [
+            "string"
+        ],
+        "image": "url", 
+    },
+}
+```
+
 <br>
 
 ## Post Routes

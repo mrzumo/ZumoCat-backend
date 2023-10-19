@@ -60,7 +60,7 @@ const routes = {
 	root: (await import("./src/routes/root.js")).default,
 	upload: (await import("./src/routes/upload.js")).default,
 	random: (await import("./src/routes/random.js")).default,
-	getLatest: (await import("./src/routes/getLatest.js")).default,
+	getLatest: (await import("./src/routes/latest.js")).default,
 };
 
 app.get("/", routes.root);
