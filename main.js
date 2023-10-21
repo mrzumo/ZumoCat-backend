@@ -9,6 +9,7 @@ import { InitMongo } from "./src/mongoose.js";
 import { requireAuth } from "./src/routes/auth.js";
 
 import cors from "cors";
+import path from "path";
 import express from "express";
 import request from "sync-request";
 import busboy from "connect-busboy";
@@ -17,12 +18,15 @@ import rateLimit from "express-rate-limit";
 // -- Constants --
 
 const env = process.env
+const rootPath = path.resolve(path.dirname("."));
 
 const SERVER_PORT = parseInt(env.PORT) || 4040;
 const IS_PRODUCTION = env.PRODUCTION == "true" || false;
 
 const RATE_LIMIT_MAX = parseInt(env.RATE_LIMIT_MAX) || 100;
 const RATE_LIMIT_DELAY = parseInt(env.RATE_LIMIT_DELAY) || 60 * 5000;
+
+global.ROOT_PATH = rootPath;
 
 Logger.info("Environment Variables: ")
 Logger.info(`	Port: ${SERVER_PORT}`)

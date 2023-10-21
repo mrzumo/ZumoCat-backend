@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 
 export const environment = process.env.NODE_ENV;
 
-
 switch (environment) {
 	case "development":
 		dotenv.config({ path: ".env.dev" });
