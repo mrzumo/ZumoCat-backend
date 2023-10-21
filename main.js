@@ -6,6 +6,7 @@ import { environment } from "./src/environment.js";
 
 import Logger from "./src/logger.js";
 import { InitMongo } from "./src/mongoose.js";
+import { requireAuth } from "./src/routes/auth.js";
 
 import cors from "cors";
 import express from "express";
@@ -53,8 +54,6 @@ const rateLimiter = rateLimit({
 		);
 	},
 });
-
-import { requireAuth } from "./src/routes/auth.js";
 
 const routes = {
 	root: (await import("./src/routes/root.js")).default,

@@ -9,13 +9,9 @@ import chalk from "chalk";
 if (!fs.existsSync("logs")) {
 	fs.mkdirSync("logs");
 } else {
-	let logs_exist = fs.existsSync("logs")
-
-	if (logs_exist) {
-		fs.readdirSync("logs").map((child) => {
-			fs.unlinkSync(`logs/${child}`)
-		});
-	}
+	fs.readdirSync("logs").map((child) => {
+		fs.unlinkSync(`logs/${child}`)
+	});
 }
 
 const colorReplace = {
