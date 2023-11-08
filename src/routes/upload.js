@@ -1,4 +1,4 @@
-import { uploadImage } from "../firebase.js";
+import { uploadImage } from "../utils/firebase.js";
 
 export default function (req, res, _next) {
 	// Pipe the request to busboy

@@ -1,6 +1,6 @@
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { initializeApp } from "firebase/app";
-import { assertWarn } from "./utility.js";
+import { assertWarn } from "./functions.js";
 import { CatModel } from "./mongoose.js";
 import Logger from "./logger.js";
 

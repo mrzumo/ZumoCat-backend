@@ -1,5 +1,5 @@
-import { CatModel } from "../mongoose.js";
-import { getModelJson } from "../mongoose.js";
+import { CatModel } from "../utils/mongoose.js";
+import { getModelJson } from "../utils/mongoose.js";
 
 export default async function (_req, res) {
     let cats = await CatModel.find({}).sort({ uploadTime: -1 }).limit(30);

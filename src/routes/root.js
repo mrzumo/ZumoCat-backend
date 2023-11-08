@@ -1,6 +1,5 @@
 import fs from 'fs';
 
-
 const content = fs.readFileSync(global.ROOT_PATH + "/static/index.html", 'utf8');
 
 export default function (_req, res) {

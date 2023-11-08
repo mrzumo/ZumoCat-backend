@@ -1,5 +1,5 @@
-import { CatModel } from "../mongoose.js";
-import { storage } from "../firebase.js";
+import { CatModel } from "../utils/mongoose.js";
+import { storage } from "../utils/firebase.js";
 import { ref, getDownloadURL } from "firebase/storage";
 
 export default async function (_req, res) {
